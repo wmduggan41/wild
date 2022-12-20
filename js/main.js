@@ -3,34 +3,34 @@
  *
  * ------------------------------------------------------------------- */
 
-(function(html) {
+(function (html) {
 
     'use strict';
 
     const cfg = {
-        
+
         // MailChimp URL
-        mailChimpURL : 'https://facebook.us1.list-manage.com/subscribe/post?u=1abf75f6981256963a47d197a&amp;id=37c6d8f4d6' 
+        mailChimpURL: 'https://facebook.us1.list-manage.com/subscribe/post?u=1abf75f6981256963a47d197a&amp;id=37c6d8f4d6'
 
     };
 
 
-   /* preloader
-    * -------------------------------------------------- */
-    const ssPreloader = function() {
+    /* preloader
+     * -------------------------------------------------- */
+    const ssPreloader = function () {
 
         const siteBody = document.querySelector('body');
         const preloader = document.querySelector('#preloader');
         if (!preloader) return;
 
         html.classList.add('ss-preload');
-        
-        window.addEventListener('load', function() {
+
+        window.addEventListener('load', function () {
             html.classList.remove('ss-preload');
             html.classList.add('ss-loaded');
 
             preloader.addEventListener('transitionend', function afterTransition(e) {
-                if (e.target.matches('#preloader'))  {
+                if (e.target.matches('#preloader')) {
                     siteBody.classList.add('ss-show');
                     e.target.style.display = 'none';
                     preloader.removeEventListener(e.type, afterTransition);
@@ -45,8 +45,8 @@
     }; // end ssPreloader
 
 
-   /* move header
-    * -------------------------------------------------- */
+    /* move header
+     * -------------------------------------------------- */
     const ssMoveHeader = function () {
 
         const hdr = document.querySelector('.s-header');
@@ -55,7 +55,7 @@
 
         if (!(hdr && hero)) return;
 
-        setTimeout(function() {
+        setTimeout(function () {
             triggerHeight = hero.offsetHeight - 170;
         }, 300);
 
@@ -86,9 +86,9 @@
     }; // end ssMoveHeader
 
 
-   /* mobile menu
-    * ---------------------------------------------------- */ 
-    const ssMobileMenu = function() {
+    /* mobile menu
+     * ---------------------------------------------------- */
+    const ssMobileMenu = function () {
 
         const toggleButton = document.querySelector('.s-header__menu-toggle');
         const mainNavWrap = document.querySelector('.s-header__nav');
@@ -96,15 +96,15 @@
 
         if (!(toggleButton && mainNavWrap)) return;
 
-        toggleButton.addEventListener('click', function(event) {
+        toggleButton.addEventListener('click', function (event) {
             event.preventDefault();
             toggleButton.classList.toggle('is-clicked');
             siteBody.classList.toggle('menu-is-open');
         });
 
-        mainNavWrap.querySelectorAll('.s-header__nav a').forEach(function(link) {
+        mainNavWrap.querySelectorAll('.s-header__nav a').forEach(function (link) {
 
-            link.addEventListener("click", function(event) {
+            link.addEventListener("click", function (event) {
 
                 // at 800px and below
                 if (window.matchMedia('(max-width: 800px)').matches) {
@@ -114,7 +114,7 @@
             });
         });
 
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
 
             // above 800px
             if (window.matchMedia('(min-width: 801px)').matches) {
@@ -128,7 +128,7 @@
 
     /* highlight active menu link on pagescroll
     * ------------------------------------------------------ */
-    const ssScrollSpy = function() {
+    const ssScrollSpy = function () {
 
         const sections = document.querySelectorAll('.target-section');
 
@@ -136,23 +136,23 @@
         window.addEventListener('scroll', navHighlight);
 
         function navHighlight() {
-        
+
             // Get current scroll position
             let scrollY = window.pageYOffset;
-        
+
             // Loop through sections to get height(including padding and border), 
             // top and ID values for each
-            sections.forEach(function(current) {
+            sections.forEach(function (current) {
                 const sectionHeight = current.offsetHeight;
                 const sectionTop = current.offsetTop - 50;
                 const sectionId = current.getAttribute('id');
-            
-               /* If our current scroll position enters the space where current section 
-                * on screen is, add .current class to parent element(li) of the thecorresponding 
-                * navigation link, else remove it. To know which link is active, we use 
-                * sectionId variable we are getting while looping through sections as 
-                * an selector
-                */
+
+                /* If our current scroll position enters the space where current section 
+                 * on screen is, add .current class to parent element(li) of the thecorresponding 
+                 * navigation link, else remove it. To know which link is active, we use 
+                 * sectionId variable we are getting while looping through sections as 
+                 * an selector
+                 */
                 if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
                     document.querySelector('.s-header__nav a[href*=' + sectionId + ']').parentNode.classList.add('current');
                 } else {
@@ -164,14 +164,14 @@
     }; // end ssScrollSpy
 
 
-   /* masonry
-    * ------------------------------------------------------ */
-     const ssMasonry = function() {
+    /* masonry
+     * ------------------------------------------------------ */
+    const ssMasonry = function () {
 
         const containerBricks = document.querySelector('.bricks-wrapper');
         if (!containerBricks) return;
 
-        imagesLoaded(containerBricks, function() {
+        imagesLoaded(containerBricks, function () {
 
             const msnry = new Masonry(containerBricks, {
                 itemSelector: '.entry',
@@ -185,9 +185,9 @@
     }; // end ssMasonry
 
 
-   /* swiper
-    * ------------------------------------------------------ */ 
-    const ssSwiper = function() {
+    /* swiper
+     * ------------------------------------------------------ */
+    const ssSwiper = function () {
 
         const testimonialsSwiper = new Swiper('.s-testimonials__slider', {
 
@@ -218,9 +218,9 @@
     }; // end ssSwiper
 
 
-   /* mailchimp form
-    * ---------------------------------------------------- */ 
-    const ssMailChimpForm = function() {
+    /* mailchimp form
+     * ---------------------------------------------------- */
+    const ssMailChimpForm = function () {
 
         const mcForm = document.querySelector('#mc-form');
 
@@ -284,7 +284,7 @@
         window.displayMailChimpStatus = function (data) {
 
             // Make sure the data is in the right format and that there's a status container
-            if (!data.result || !data.msg || !mcStatus ) return;
+            if (!data.result || !data.msg || !mcStatus) return;
 
             // Update our status message
             mcStatus.innerHTML = data.msg;
@@ -314,8 +314,8 @@
             url += serialize + '&c=displayMailChimpStatus';
 
             // Create script with url and callback (if specified)
-            var ref = window.document.getElementsByTagName( 'script' )[ 0 ];
-            var script = window.document.createElement( 'script' );
+            var ref = window.document.getElementsByTagName('script')[0];
+            var script = window.document.createElement('script');
             script.src = url;
 
             // Create global variable for the status container
@@ -324,7 +324,7 @@
             window.mcStatus.innerText = 'Submitting...';
 
             // Insert script tag into the DOM
-            ref.parentNode.insertBefore( script, ref );
+            ref.parentNode.insertBefore(script, ref);
 
             // After the script is loaded (and executed), remove it
             script.onload = function () {
@@ -354,44 +354,44 @@
     }; // end ssMailChimpForm
 
 
-   /* Lightbox
-    * ------------------------------------------------------ */
-    const ssLightbox = function() {
+    /* Lightbox
+     * ------------------------------------------------------ */
+    const ssLightbox = function () {
 
         // video lightbox
-        const videoLightbox = function() {
+        const videoLightbox = function () {
 
             const videoLink = document.querySelector('.s-intro__content-video-btn');
             if (!videoLink) return;
-    
-            videoLink.addEventListener('click', function(event) {
-    
+
+            videoLink.addEventListener('click', function (event) {
+
                 const vLink = this.getAttribute('href');
                 const iframe = "<iframe src='" + vLink + "' frameborder='0'></iframe>";
-    
+
                 event.preventDefault();
-    
+
                 const instance = basicLightbox.create(iframe);
                 instance.show()
-    
+
             });
-    
+
         };
 
         // portfolio lightbox
-        const folioLightbox = function() {
+        const folioLightbox = function () {
 
             const folioLinks = document.querySelectorAll('.brick .entry__link');
             const modals = [];
-    
-            folioLinks.forEach(function(link) {
+
+            folioLinks.forEach(function (link) {
                 let modalbox = link.getAttribute('href');
                 let instance = basicLightbox.create(
                     document.querySelector(modalbox),
                     {
-                        onShow: function(instance) {
+                        onShow: function (instance) {
                             //detect Escape key press
-                            document.addEventListener("keydown", function(event) {
+                            document.addEventListener("keydown", function (event) {
                                 event = event || window.event;
                                 if (event.key === "Escape") {
                                     instance.close();
@@ -402,14 +402,14 @@
                 )
                 modals.push(instance);
             });
-    
-            folioLinks.forEach(function(link, index) {
-                link.addEventListener("click", function(event) {
+
+            folioLinks.forEach(function (link, index) {
+                link.addEventListener("click", function (event) {
                     event.preventDefault();
                     modals[index].show();
                 });
             });
-    
+
         };
 
         videoLightbox();
@@ -418,20 +418,20 @@
     }; // ssLightbox
 
 
-   /* alert boxes
-    * ------------------------------------------------------ */
-    const ssAlertBoxes = function() {
+    /* alert boxes
+     * ------------------------------------------------------ */
+    const ssAlertBoxes = function () {
 
         const boxes = document.querySelectorAll('.alert-box');
-  
-        boxes.forEach(function(box){
 
-            box.addEventListener('click', function(event) {
+        boxes.forEach(function (box) {
+
+            box.addEventListener('click', function (event) {
                 if (event.target.matches('.alert-box__close')) {
                     event.stopPropagation();
                     event.target.parentElement.classList.add('hideit');
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         box.style.display = 'none';
                     }, 500)
                 }
@@ -443,7 +443,7 @@
 
     /* Back to Top
     * ------------------------------------------------------ */
-    const ssBackToTop = function() {
+    const ssBackToTop = function () {
 
         const pxShow = 900;
         const goTopButton = document.querySelector(".ss-go-top");
@@ -453,9 +453,9 @@
         // Show or hide the button
         if (window.scrollY >= pxShow) goTopButton.classList.add("link-is-visible");
 
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             if (window.scrollY >= pxShow) {
-                if(!goTopButton.classList.contains('link-is-visible')) goTopButton.classList.add("link-is-visible")
+                if (!goTopButton.classList.contains('link-is-visible')) goTopButton.classList.add("link-is-visible")
             } else {
                 goTopButton.classList.remove("link-is-visible")
             }
@@ -464,9 +464,9 @@
     }; // end ssBackToTop
 
 
-   /* smoothscroll
-    * ------------------------------------------------------ */
-    const ssMoveTo = function(){
+    /* smoothscroll
+     * ------------------------------------------------------ */
+    const ssMoveTo = function () {
 
         const easeFunctions = {
             easeInQuad: function (t, b, c, d) {
@@ -475,24 +475,24 @@
             },
             easeOutQuad: function (t, b, c, d) {
                 t /= d;
-                return -c * t* (t - 2) + b;
+                return -c * t * (t - 2) + b;
             },
             easeInOutQuad: function (t, b, c, d) {
-                t /= d/2;
-                if (t < 1) return c/2*t*t + b;
+                t /= d / 2;
+                if (t < 1) return c / 2 * t * t + b;
                 t--;
-                return -c/2 * (t*(t-2) - 1) + b;
+                return -c / 2 * (t * (t - 2) - 1) + b;
             },
             easeInOutCubic: function (t, b, c, d) {
-                t /= d/2;
-                if (t < 1) return c/2*t*t*t + b;
+                t /= d / 2;
+                if (t < 1) return c / 2 * t * t * t + b;
                 t -= 2;
-                return c/2*(t*t*t + 2) + b;
+                return c / 2 * (t * t * t + 2) + b;
             }
         }
 
         const triggers = document.querySelectorAll('.smoothscroll');
-        
+
         const moveTo = new MoveTo({
             tolerance: 0,
             duration: 1200,
@@ -500,15 +500,15 @@
             container: window
         }, easeFunctions);
 
-        triggers.forEach(function(trigger) {
+        triggers.forEach(function (trigger) {
             moveTo.registerTrigger(trigger);
         });
 
     }; // end ssMoveTo
 
 
-   /* Initialize
-    * ------------------------------------------------------ */
+    /* Initialize
+     * ------------------------------------------------------ */
     (function ssInit() {
 
         ssPreloader();
